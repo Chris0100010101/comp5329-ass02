@@ -1,0 +1,8 @@
+You are a research analyst. Given the following research topic, identify the most important research gaps.
+
+Research Topic: {topic}
+
+List 3 specific research gaps in the current literature. For each gap, explain why it matters.
+Format your response as a numbered list.
+
+Research Gaps:

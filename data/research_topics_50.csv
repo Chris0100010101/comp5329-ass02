@@ -1,0 +1,51 @@
+topic_id,domain,topic
+T001,LLMs_RAG,Hallucination reduction in retrieval-augmented generation systems
+T002,LLMs_RAG,Reasoning consistency in chain-of-thought prompting
+T003,LLMs_RAG,Effect of noisy retrieval on multi-step LLM reasoning
+T004,LLMs_RAG,Document reranking for improving RAG answer reliability
+T005,LLMs_RAG,Faithfulness evaluation in retrieval-augmented language models
+T006,LLMs_RAG,Long-context transformers versus retrieval-augmented generation
+T007,LLMs_RAG,Self-reflection mechanisms in retrieval-augmented LLMs
+T008,LLMs_RAG,Query rewriting for improving retrieval quality in RAG
+T009,LLMs_RAG,Context selection strategies for knowledge-intensive generation
+T010,LLMs_RAG,Contradiction detection in generated reasoning chains
+T011,LLMs_RAG,Uncertainty estimation in retrieval-augmented language models
+T012,LLMs_RAG,Evaluating factual grounding in scientific text generation
+T013,Healthcare_AI,Early detection of Alzheimer’s disease using multimodal learning
+T014,Healthcare_AI,Deep learning for clinical risk prediction from electronic health records
+T015,Healthcare_AI,Medical image diagnosis using vision transformers
+T016,Healthcare_AI,Federated learning for privacy-preserving healthcare AI
+T017,Healthcare_AI,Bias and fairness in clinical machine learning models
+T018,Healthcare_AI,Explainable AI for radiology decision support
+T019,Healthcare_AI,LLM-based clinical decision support using patient records
+T020,Healthcare_AI,Multimodal models for combining imaging and clinical notes
+T021,Healthcare_AI,Robustness of medical AI systems under distribution shift
+T022,Healthcare_AI,Automatic summarization of clinical notes using language models
+T023,Healthcare_AI,Data-efficient learning for rare disease diagnosis
+T024,Healthcare_AI,Uncertainty-aware deep learning for medical diagnosis
+T025,Scientific_QA,Retrieval-augmented question answering over scientific papers
+T026,Scientific_QA,Scientific claim verification using language models
+T027,Scientific_QA,Evidence retrieval for literature-based question answering
+T028,Scientific_QA,Multi-hop reasoning over scientific abstracts
+T029,Scientific_QA,Citation-aware generation for scientific writing assistants
+T030,Scientific_QA,Benchmarking LLMs on scientific reasoning tasks
+T031,Scientific_QA,Automatic literature review generation with evidence grounding
+T032,Scientific_QA,Contradiction detection across scientific papers
+T033,Scientific_QA,Question answering over biomedical research articles
+T034,Scientific_QA,Graph-based retrieval for scientific knowledge discovery
+T035,Scientific_QA,Evaluation of factual consistency in scientific summaries
+T036,Scientific_QA,LLM-assisted hypothesis generation from scientific literature
+T037,Educational_AI,Personalized learning systems using reinforcement learning
+T038,Educational_AI,LLM-based tutoring systems for adaptive education
+T039,Educational_AI,Automatic feedback generation for student writing
+T040,Educational_AI,Knowledge tracing with deep learning models
+T041,Educational_AI,Student performance prediction using educational data mining
+T042,Educational_AI,Fairness in AI-based educational assessment
+T043,Educational_AI,Explainable recommendation systems for online learning
+T044,Educational_AI,Detecting misconceptions in student responses using NLP
+T045,Educational_AI,Multimodal learning analytics in digital classrooms
+T046,Educational_AI,AI-assisted formative assessment in higher education
+T047,Educational_AI,Conversational agents for collaborative learning
+T048,Educational_AI,Evaluating hallucination risks in educational chatbots
+T049,Educational_AI,Adaptive sequencing of learning materials using neural models
+T050,Educational_AI,Student engagement prediction in online learning environments

@@ -1,0 +1,17 @@
+You are an experimental researcher. Design experiments to test the hypotheses below.
+
+Research Topic: {topic}
+
+Identified Research Gaps:
+{gap_analysis}
+
+Hypotheses to Test:
+{hypothesis}
+
+Background Documents:
+{context}
+
+For each hypothesis, design a concrete experiment including: (a) method, (b) key variables, (c) expected outcome.
+Format your response as a numbered list matching the hypotheses above.
+
+Experiment Designs:

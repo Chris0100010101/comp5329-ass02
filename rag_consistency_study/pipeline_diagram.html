@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>RAG Pipeline Diagram</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f2f5; padding: 30px; }
+  h1 { text-align: center; color: #333; margin-bottom: 30px; font-size: 20px; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+
+  .pipeline {
+    background: white;
+    border-radius: 12px;
+    padding: 18px 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  }
+  .pipeline h2 {
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    color: white;
+  }
+
+  /* colour per pipeline */
+  .vanilla h2   { background: #6c757d; }
+  .rag h2       { background: #dc3545; }
+  .rag-single h2 { background: #0d6efd; }
+  .rag-rerank h2 { background: #198754; }
+
+  /* boxes */
+  .box {
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 11.5px;
+    text-align: center;
+    line-height: 1.4;
+    position: relative;
+  }
+  .input    { background: #fff3cd; border: 1.5px solid #ffc107; color: #664d03; font-weight: 600; }
+  .store    { background: #cfe2ff; border: 1.5px solid #0d6efd; color: #084298; }
+  .retrieve { background: #d1ecf1; border: 1.5px solid #0dcaf0; color: #055160; }
+  .rerank-box { background: #d4edda; border: 1.5px solid #198754; color: #155724; }
+  .llm      { background: #e2d9f3; border: 1.5px solid #6f42c1; color: #432874; }
+  .output   { background: #f8d7da; border: 1.5px solid #dc3545; color: #842029; }
+  .eval     { background: #f0f0f0; border: 1.5px dashed #999; color: #444; font-size: 11px; }
+  .shared-ctx { background: #fff0e6; border: 1.5px solid #fd7e14; color: #7c3000; font-weight: 600; }
+
+  /* arrows */
+  .arrow {
+    text-align: center;
+    color: #888;
+    font-size: 16px;
+    line-height: 1.2;
+    margin: 3px 0;
+  }
+  .arrow-label {
+    text-align: center;
+    font-size: 10px;
+    color: #999;
+    margin-bottom: 2px;
+  }
+
+  /* step group */
+  .step-group {
+    border: 1.5px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 8px 8px 6px;
+    margin: 4px 0;
+  }
+  .step-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+  }
+
+  .drift-note {
+    font-size: 10px;
+    color: #dc3545;
+    text-align: center;
+    font-style: italic;
+    margin-top: 3px;
+  }
+  .good-note {
+    font-size: 10px;
+    color: #198754;
+    text-align: center;
+    font-style: italic;
+    margin-top: 3px;
+  }
+
+  /* legend */
+  .legend {
+    max-width: 1300px;
+    margin: 24px auto 0;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    background: white;
+    border-radius: 10px;
+    padding: 14px 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .legend-item { display: flex; align-items: center; gap: 7px; font-size: 12px; }
+  .legend-dot  { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<h1>RAG Reasoning Consistency Study — Pipeline Comparison</h1>
+
+<div class="grid">
+
+  <!-- ── VANILLA ── -->
+  <div class="pipeline vanilla">
+    <h2>Vanilla (none)</h2>
+
+    <div class="box input">Research Topic</div>
+    <div class="arrow">↓</div>
+
+    <div class="step-group">
+      <div class="step-label">Step 1</div>
+      <div class="box llm">LLM<br><small>Gap Identification</small></div>
+    </div>
+    <div class="arrow">↓</div>
+
+    <div class="step-group">
+      <div class="step-label">Step 2</div>
+      <div class="box llm">LLM<br><small>Hypothesis Generation</small></div>
+    </div>
+    <div class="arrow">↓</div>
+
+    <div class="step-group">
+      <div class="step-label">Step 3</div>
+      <div class="box llm">LLM<br><small>Experiment Design</small></div>
+    </div>
+    <div class="arrow">↓</div>
+
+    <div class="box output">Gap / Hypothesis / Experiment</div>
+    <div class="arrow">↓</div>
+
+    <div class="box eval">
+      Evidence Judge<br>
+      <span style="color:#dc3545">(post-hoc: retrieve clean docs)</span>
+    </div>
+
+    <div class="drift-note">No retrieval — relies on LLM<br>training knowledge only</div>
+  </div>
+
+
+  <!-- ── RAG (per-step) ── -->
+  <div class="pipeline rag">
+    <h2>RAG (per-step drift)</h2>
+
+    <div class="box input">Research Topic</div>
+    <div class="arrow">↓</div>
+    <div class="box store">FAISS Vector Store</div>
+
+    <div class="arrow">↓</div>
+    <div class="step-group">
+      <div class="step-label">Step 1 — query: <em>topic</em></div>
+      <div class="box retrieve">Retrieve top-5 docs</div>
+      <div class="arrow" style="font-size:12px">↓</div>
+      <div class="box llm">LLM — Gap Identification</div>
+    </div>
+
+    <div class="arrow">↓</div>
+    <div class="step-group">
+      <div class="step-label">Step 2 — query: <em>gap_analysis</em> ⚠️</div>
+      <div class="box retrieve">Retrieve top-5 docs</div>
+      <div class="arrow" style="font-size:12px">↓</div>
+      <div class="box llm">LLM — Hypothesis</div>
+    </div>
+
+    <div class="arrow">↓</div>
+    <div class="step-group">
+      <div class="step-label">Step 3 — query: <em>hypothesis</em> ⚠️</div>
+      <div class="box retrieve">Retrieve top-5 docs</div>
+      <div class="arrow" style="font-size:12px">↓</div>
+      <div class="box llm">LLM — Experiment Design</div>
+    </div>
+
+    <div class="arrow">↓</div>
+    <div class="box output">Gap / Hypothesis / Experiment</div>
+
+    <div class="drift-note">⚠️ Query drifts each step<br>→ different docs → context drift</div>
+  </div>
+
+
+  <!-- ── RAG SINGLE ── -->
+  <div class="pipeline rag-single">
+    <h2>RAG Single</h2>
+
+    <div class="box input">Research Topic</div>
+    <div class="arrow">↓</div>
+    <div class="box store">FAISS Vector Store</div>
+    <div class="arrow">↓</div>
+    <div class="box retrieve">Retrieve top-5 docs (once)</div>
+    <div class="arrow">↓</div>
+    <div class="box shared-ctx">Shared Context (5 docs)</div>
+
+    <div class="arrow">↓</div>
+    <div class="step-group">
+      <div class="step-label">Step 1</div>
+      <div class="box llm">LLM — Gap Identification</div>
+    </div>
+
+    <div class="arrow">↓</div>
+    <div class="step-group">
+      <div class="step-label">Step 2</div>
+      <div class="box llm">LLM — Hypothesis</div>
+    </div>
+
+    <div class="arrow">↓</div>
+    <div class="step-group">
+      <div class="step-label">Step 3</div>
+      <div class="box llm">LLM — Experiment Design</div>
+    </div>
+
+    <div class="arrow">↓</div>
+    <div class="box output">Gap / Hypothesis / Experiment</div>
+
+    <div class="good-note">✓ Same docs across all steps<br>→ no context drift</div>
+  </div>
+
+
+  <!-- ── RAG RERANK SINGLE ── -->
+  <div class="pipeline rag-rerank">
+    <h2>RAG + Rerank (Single)</h2>
+
+    <div class="box input">Research Topic</div>
+    <div class="arrow">↓</div>
+    <div class="box store">FAISS Vector Store</div>
+    <div class="arrow">↓</div>
+    <div class="box retrieve">Retrieve top-5 candidates</div>
+    <div class="arrow">↓</div>
+    <div class="box rerank-box">BGE Reranker<br><small>cosine sim → keep top-3</small></div>
+    <div class="arrow">↓</div>
+    <div class="box shared-ctx">Shared Context (3 docs, reranked)</div>
+
+    <div class="arrow">↓</div>
+    <div class="step-group">
+      <div class="step-label">Step 1</div>
+      <div class="box llm">LLM — Gap Identification</div>
+    </div>
+
+    <div class="arrow">↓</div>
+    <div class="step-group">
+      <div class="step-label">Step 2</div>
+      <div class="box llm">LLM — Hypothesis</div>
+    </div>
+
+    <div class="arrow">↓</div>
+    <div class="step-group">
+      <div class="step-label">Step 3</div>
+      <div class="box llm">LLM — Experiment Design</div>
+    </div>
+
+    <div class="arrow">↓</div>
+    <div class="box output">Gap / Hypothesis / Experiment</div>
+
+    <div class="good-note">✓ Reranked precision + no drift<br>→ best consistency expected</div>
+  </div>
+
+</div>
+
+<!-- LEGEND -->
+<div class="legend">
+  <strong style="font-size:12px">Legend:</strong>
+  <div class="legend-item"><div class="legend-dot" style="background:#fff3cd;border:1.5px solid #ffc107"></div> User Input</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#cfe2ff;border:1.5px solid #0d6efd"></div> Vector Store</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#d1ecf1;border:1.5px solid #0dcaf0"></div> Retrieval</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#d4edda;border:1.5px solid #198754"></div> Reranker</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#fff0e6;border:1.5px solid #fd7e14"></div> Shared Context</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#e2d9f3;border:1.5px solid #6f42c1"></div> LLM Generation</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#f8d7da;border:1.5px solid #dc3545"></div> Output</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#f0f0f0;border:1.5px dashed #999"></div> Evaluation</div>
+  <div style="font-size:11px;color:#dc3545;margin-left:10px">⚠️ RAG per-step: query changes each step → retrieves different docs → context drift</div>
+</div>
+
+</body>
+</html>

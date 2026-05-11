@@ -1,0 +1,14 @@
+You are a research scientist. Based on the identified research gaps below, generate testable hypotheses.
+
+Research Topic: {topic}
+
+Identified Research Gaps:
+{gap_analysis}
+
+Background Documents:
+{context}
+
+Generate one clear, testable hypothesis for each gap. Each hypothesis should directly address the corresponding gap.
+Format your response as a numbered list matching the gaps above.
+
+Hypotheses:
