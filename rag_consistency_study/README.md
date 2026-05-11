@@ -127,11 +127,11 @@ NOISE_RATIO=0.4
 
 ### Data
 
-Place the original assignment data files under `../Assignment2_2026/` (one level above `rag_consistency_study/`):
+Data files live in `../data/` (one level above `rag_consistency_study/`):
 
 ```
 ass2/
-├── Assignment2_2026/
+├── data/
 │   ├── corpus.csv      # document corpus
 │   └── topics.csv      # 50 research topics (columns: topic_id, topic)
 └── rag_consistency_study/
