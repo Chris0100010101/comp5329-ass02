@@ -111,20 +111,6 @@ pip install langchain langchain-openai langchain-community faiss-cpu pandas open
 | LM Studio (local) | BGE-M3 embedding + BGE reranker | `LM_STUDIO_BASE_URL` in `.env` |
 | DeepSeek API | Generation + LLM-as-judge | `DEEPSEEK_API_KEY` in `.env` |
 
-### .env
-
-```
-DEEPSEEK_API_KEY=<your key>
-
-LM_STUDIO_BASE_URL=http://127.0.0.1:1234/v1
-EMBED_MODEL_NAME=text-embedding-bge-m3
-LM_STUDIO_RERANK_MODEL=text-embedding-bge-reranker-v2-m3
-
-RETRIEVAL_TOP_K=5
-RERANKER_TOP_K=5
-NOISE_RATIO=0.4
-```
-
 ### Data
 
 Data files live in `../data/` (one level above `rag_consistency_study/`):
