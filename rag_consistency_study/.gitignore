@@ -17,9 +17,6 @@ venv/
 .venv/
 env/
 
-# FAISS index (large binary, rebuild with --build-corpus)
-faiss_index/
-
 # Experiment results and statistics (can be regenerated)
 results/
 statistics/

@@ -9,7 +9,7 @@ __pycache__/
 *.pyo
 
 # FAISS index (large binary, rebuild with --build-corpus)
-**/faiss_index/
+
 
 # Experiment results and statistics (generated output)
 **/results/
